@@ -19,14 +19,14 @@ const remover = (cliente) =>{
     }).catch(error => {
         console.log('El usuario no ha sido borrado por: ' + error);
     })
-
 }
+
 const obtenerTodos = async () =>{
     return await Colecciones.cliente.find().sort();
 }
 
 const obtener = async (userId) =>{
-    return await Colecciones.cliente.findById(userId);
+    return await Colecciones.cliente.find({userId: userId}).sort()
 }
 const actualizar = async (cliente) =>{
     const actualizarCliente = await Colecciones.cliente.updateOne(

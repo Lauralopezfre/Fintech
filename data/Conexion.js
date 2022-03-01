@@ -64,14 +64,26 @@ const crearColecciones = () => {
         })
     );
 
+    // Cuenta
     colecciones.push(
         mongoose.Schema({
             balance: Number,
             estadoCuenta: String,
-            reporte: String,
-            tarjetaDebito: String,
+            reporte: Object,
+            tarjetaDebito: Object,
             tipoCuenta: String,
-            titular: String
+            titular: Object
+        })
+    );
+
+    // Movimiento
+    colecciones.push(
+        mongoose.Schema({
+            idMovimiento: String,
+            cantidad: Number,
+            claveRastreo: String,
+            fechaHora: String,
+            bancoReceptor: String
         })
     );
 
@@ -87,6 +99,7 @@ const crearModelos = () => {
     modelos.push(mongoose.model("administradores", colecciones[1]));
     modelos.push(mongoose.model("tarjetas", colecciones[2]));
     modelos.push(mongoose.model("cuentas", colecciones[3]));
+    modelos.push(mongoose.model("movimientos", colecciones[4]));
 
     return modelos
 };
@@ -97,5 +110,6 @@ module.exports = {
     cliente: modelos[0],
     administrador: modelos[1],
     tarjeta: modelos[2],
-    cuenta: modelos[3]
+    cuenta: modelos[3],
+    movimiento: modelos[4]
 }

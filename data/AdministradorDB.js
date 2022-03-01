@@ -11,16 +11,44 @@ const insertar = (administrador) =>{
 }   
 
 const remover = (administrador) =>{
+    const borrarAdministrador = async () => {
+        return await Colecciones.administrador.deleteOne(administrador);
+    }
 
+    borrarAdministrador().then(()=>{
+        console.log('El admin ha sido borrado');
+    }).catch(error => {
+        console.log('El admin no ha sido borrado por: ' + error);
+    })
 }
 
-const obtenerTodos = () =>{
-
+const obtenerTodos = async() =>{
+    return await Colecciones.administrador.find().sort();
 }
-const obtener = (userId) =>{
 
+const obtener = async(userId) =>{
+    return await Colecciones.administrador.find({userId: userId}).sort();
 }
-const actualizar = (administrador) =>{
+
+const actualizar = async(a) =>{
+    const actualizarAdmin = await Colecciones.administrador.updateOne(
+        {userId: a.userId},
+        {
+            $set: {
+                userId: a.userId,
+                nombre: a.nombre,
+                contrasenia: a.contrasenia,
+                fechaRegistro: a.fechaRegistro,
+                email: a.email,
+                nombreAdministrador: a.email,
+                area: a.area,
+                puesto: a.puesto,
+                telefono: a.telefono
+            }
+        }
+    )
+    console.log(`${actualizarAdmin.matchedCount} cliente va a ser modificado`);
+    console.log(`${actualizarAdmin.modifiedCount} cliente ha sido modificado`);
 
 }
 

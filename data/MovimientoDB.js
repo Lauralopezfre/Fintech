@@ -1,17 +1,49 @@
+const Colecciones = require('../data/Conexion');
+
 const insertar = (movimiento) =>{
+    const insertarCuenta = new Colecciones.movimiento(movimiento);
 
+    insertarCuenta.save().then( doc => {
+        console.log('Se ha guardado el movimiento: ' + doc);
+    }).catch( error => {
+        console.log('Ha ocurrido un error: '+ error);
+    });
 }
-const remover = (movimiento) =>{
+const remover = (cuenta) =>{
+    const borrarCuenta = async () => {
+        return await Colecciones.movimiento.deleteOne(cuenta);
+    }
 
+    borrarCuenta().then(()=>{
+        console.log('El movimiento ha sido borrado');
+    }).catch(error => {
+        console.log('El movimiento no ha sido borrado por: ' + error);
+    })
 }
-const obtenerTodos = () =>{
 
+const obtenerTodos = async() =>{
+    return await Colecciones.movimiento.find().sort();
 }
-const obtener = (userId) =>{
 
+const obtener = async (idMovimiento) =>{
+    return await Colecciones.movimiento.find({idMovimiento: idMovimiento}).sort();
 }
-const actualizar = (movimiento) =>{
 
+const actualizar = async(movi) =>{
+    const actualizarCuenta = await Colecciones.movimiento.updateOne(
+        {idMovimiento: movi.idMovimiento},
+        {
+            $set: {
+                idMovimiento: movi.idMovimiento,
+                cantidad: movi.cantidad,
+                claveRastreo: movi.claveRastreo,
+                fechaHora: movi.fechaHora,
+                bancoReceptor: movi.bancoReceptor
+            }
+        }
+    )
+    console.log(`${actualizarCuenta.matchedCount} cliente va a ser modificado`);
+    console.log(`${actualizarCuenta.modifiedCount} cliente ha sido modificado`);
 }
 
 module.exports = MovimientoDB = {
