@@ -208,7 +208,7 @@ const obtenerCuenta = (titular) => {
 };
 
 const eliminarCuenta = (titular) => {
-  obtenerCuenta(titular).then(cuenta => {
+  obtenerCuenta(titular).then((cuenta) => {
     CuentaBD.eliminar(cuenta[0]);
   });
 };
@@ -238,6 +238,15 @@ const insertarTarjeta = (
 };
 
 const actualizarTarjeta = (
+  numero,
+  chip,
+  cvv,
+  fechaVencimiento,
+  entidadBancaria,
+  clabeInterbancaria,
+  tipoTarjeta
+) => {
+  const tarjeta = new Tarjeta(
     numero,
     chip,
     cvv,
@@ -245,34 +254,24 @@ const actualizarTarjeta = (
     entidadBancaria,
     clabeInterbancaria,
     tipoTarjeta
-    ) => {
+  );
 
-    const tarjeta = new Tarjeta(
-        numero,
-        chip,
-        cvv,
-        fechaVencimiento,
-        entidadBancaria,
-        clabeInterbancaria,
-        tipoTarjeta
-    );
+  TarjetaBD.actualizar(tarjeta);
+};
 
-    TarjetaBD.actualizar(tarjeta);
-  };
-  
-  const obtenerTodasTarjetas = () => {
-    return TarjetaBD.obtenerTodos();
-  };
-  
-  const obtenerTarjeta = (numero) => {
-    return TarjetaBD.obtener(numero);
-  };
-  
-  const eliminarTarjeta = (numero) => {
-    obtenerTarjeta(numero).then(tarjeta => {
-        TarjetaBD.eliminar(tarjeta[0]);
-    });
-  };
+const obtenerTodasTarjetas = () => {
+  return TarjetaBD.obtenerTodos();
+};
+
+const obtenerTarjeta = (numero) => {
+  return TarjetaBD.obtener(numero);
+};
+
+const eliminarTarjeta = (numero) => {
+  obtenerTarjeta(numero).then((tarjeta) => {
+    TarjetaBD.eliminar(tarjeta[0]);
+  });
+};
 
 //** MOVIMIENTO */
 
@@ -283,7 +282,6 @@ const insertarMovimiento = (
   fechaHora,
   bancoReceptor
 ) => {
-
   const mov = new Movimiento(
     idMovimiento,
     cantidad,
@@ -296,13 +294,12 @@ const insertarMovimiento = (
 };
 
 const actualizarMovimiento = (
-    idMovimiento,
-    cantidad,
-    claveRastreo,
-    fechaHora,
-    bancoReceptor
+  idMovimiento,
+  cantidad,
+  claveRastreo,
+  fechaHora,
+  bancoReceptor
 ) => {
-  
   const mov = new Movimiento(
     idMovimiento,
     cantidad,
@@ -312,21 +309,21 @@ const actualizarMovimiento = (
   );
 
   MovimientoBD.actualizar(mov);
-  };
-  
-  const obtenerTodosMovimientos = () => {
-    return MovimientoBD.obtenerTodos();
-  };
-  
-  const obtenerMovimiento = (idMovimiento) => {
-    return MovimientoBD.obtener(idMovimiento);
-  };
-  
-  const eliminarMovimiento = (idMovimiento) => {
-    obtenerMovimiento(idMovimiento).then(mov => {
-      MovimientoBD.eliminar(mov[0]);
-    });
-  };
+};
+
+const obtenerTodosMovimientos = () => {
+  return MovimientoBD.obtenerTodos();
+};
+
+const obtenerMovimiento = (idMovimiento) => {
+  return MovimientoBD.obtener(idMovimiento);
+};
+
+const eliminarMovimiento = (idMovimiento) => {
+  obtenerMovimiento(idMovimiento).then((mov) => {
+    MovimientoBD.eliminar(mov[0]);
+  });
+};
 
 module.exports = {
   cliente: {
@@ -334,21 +331,21 @@ module.exports = {
     actualizar: actualizarCliente,
     eliminar: eliminarCliente,
     obtenerTodos: obtenerTodosClientes,
-    obtener: obtenerCliente
+    obtener: obtenerCliente,
   },
   administrador: {
     insertar: insertarAdministrador,
     actualizar: actualizarAdministrador,
     eliminar: eliminarAdministrador,
     obtenerTodos: obtenerTodosAdministradores,
-    obtener: obtenerAdministrador
+    obtener: obtenerAdministrador,
   },
   cuenta: {
     insertar: insertarCuenta,
     actualizar: actualizarCuenta,
     eliminar: eliminarCuenta,
     obtenerTodos: obtenerTodasCuentas,
-    obtener: obtenerCuenta
+    obtener: obtenerCuenta,
   },
   tarjeta: {
     insertar: insertarTarjeta,
@@ -363,5 +360,5 @@ module.exports = {
     eliminar: eliminarMovimiento,
     obtenerTodos: obtenerTodosMovimientos,
     obtener: obtenerMovimiento,
-  }
+  },
 };
