@@ -114,7 +114,7 @@ const insertarAdministrador = (
     telefono
   );
 
-  AdministradorBD.insertar(administrador);
+  return AdministradorBD.insertar(administrador);
 };
 
 const actualizarAdministrador = (

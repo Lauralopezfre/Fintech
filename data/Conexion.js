@@ -1,11 +1,12 @@
 var mongoose = require("mongoose");
 var Tarjeta = require("../clases/Tarjeta");
 var Cliente = require("../clases/Cliente");
+require('dotenv').config();
 
 // Conexión con la base de datos
 const conexion = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/fintech");
+    await mongoose.connect('mongodb://localhost:27017/fintech');
     console.log("Conexión exitosa");
   } catch (error) {
     console.log("No se pudó conectar por: " + error);
