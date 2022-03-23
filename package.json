@@ -1,18 +1,27 @@
 {
   "name": "fintech",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "mongoose": "^6.2.3",
+    "mongoose": "^6.2.8",
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lauralopezfre/Fintech.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lauralopezfre/Fintech/issues"
+  },
+  "homepage": "https://github.com/Lauralopezfre/Fintech#readme",
+  "description": ""
 }

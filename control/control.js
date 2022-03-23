@@ -43,7 +43,7 @@ const insertarCliente = (
   ClienteBD.insertar(cliente);
 };
 
-const actualizarCliente = (
+const actualizarCliente = async(
   userId,
   nombre,
   contrasenia,
@@ -72,15 +72,15 @@ const actualizarCliente = (
     telefono
   );
 
-  ClienteBD.actualizar(cliente);
+  await ClienteBD.actualizar(cliente);
 };
 
-const obtenerTodosClientes = () => {
-  return ClienteBD.obtenerTodos();
+const obtenerTodosClientes = async () => {
+  return await ClienteBD.obtenerTodos();
 };
 
-const obtenerCliente = (userId) => {
-  return ClienteBD.obtener(userId);
+const obtenerCliente = async (userId) => {
+  return await ClienteBD.obtener(userId);
 };
 
 const eliminarCliente = (userId) => {
@@ -91,7 +91,7 @@ const eliminarCliente = (userId) => {
 
 //** ADMINISTRADOR */
 
-const insertarAdministrador = (
+const insertarAdministrador = async (
   userId,
   nombre,
   contrasenia,
@@ -114,10 +114,10 @@ const insertarAdministrador = (
     telefono
   );
 
-  return AdministradorBD.insertar(administrador);
+  return await AdministradorBD.insertar(administrador);
 };
 
-const actualizarAdministrador = (
+const actualizarAdministrador = async(
   userId,
   nombre,
   contrasenia,
@@ -140,15 +140,15 @@ const actualizarAdministrador = (
     telefono
   );
 
-  AdministradorBD.actualizar(administrador);
+  await AdministradorBD.actualizar(administrador);
 };
 
-const obtenerTodosAdministradores = () => {
-  return AdministradorBD.obtenerTodos();
+const obtenerTodosAdministradores = async () => {
+  return await AdministradorBD.obtenerTodos();
 };
 
-const obtenerAdministrador = (userId) => {
-  return AdministradorBD.obtener(userId);
+const obtenerAdministrador =  async (userId) => {
+  return await AdministradorBD.obtener(userId);
 };
 
 const eliminarAdministrador = (userId) => {
@@ -179,7 +179,7 @@ const insertarCuenta = (
   CuentaBD.insertar(cuenta);
 };
 
-const actualizarCuenta = (
+const actualizarCuenta = async(
   balance,
   estadoCuenta,
   reporte,
@@ -196,15 +196,15 @@ const actualizarCuenta = (
     titular
   );
 
-  CuentaBD.actualizar(cuenta);
+  await CuentaBD.actualizar(cuenta);
 };
 
-const obtenerTodasCuentas = () => {
-  return CuentaBD.obtenerTodos();
+const obtenerTodasCuentas = async() => {
+  return await CuentaBD.obtenerTodos();
 };
 
-const obtenerCuenta = (titular) => {
-  return CuentaBD.obtener(titular);
+const obtenerCuenta = async(titular) => {
+  return await CuentaBD.obtener(titular);
 };
 
 const eliminarCuenta = (titular) => {
@@ -237,7 +237,7 @@ const insertarTarjeta = (
   TarjetaBD.insertar(tarjeta);
 };
 
-const actualizarTarjeta = (
+const actualizarTarjeta = async(
   numero,
   chip,
   cvv,
@@ -256,15 +256,15 @@ const actualizarTarjeta = (
     tipoTarjeta
   );
 
-  TarjetaBD.actualizar(tarjeta);
+  await TarjetaBD.actualizar(tarjeta);
 };
 
-const obtenerTodasTarjetas = () => {
-  return TarjetaBD.obtenerTodos();
+const obtenerTodasTarjetas = async() => {
+  return await TarjetaBD.obtenerTodos();
 };
 
-const obtenerTarjeta = (numero) => {
-  return TarjetaBD.obtener(numero);
+const obtenerTarjeta = async(numero) => {
+  return await TarjetaBD.obtener(numero);
 };
 
 const eliminarTarjeta = (numero) => {

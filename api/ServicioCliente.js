@@ -1,25 +1,27 @@
 const mongoose = require('mongoose');
 const control = require('../control/control');;
 
-//Crear un administrador 
+//Crear un cliente 
 exports.insert =  async (req, res) =>{
   try {
     // Interacción con el acceso a datos
-    control.administrador.insertar(
+    control.cliente.insertar(
         req.body.userId,
         req.body.nombre,
         req.body.contrasenia,
         req.body.fechaRegistro,
         req.body.email,
-        req.body.nombreAdministrador,
-        req.body.area,
-        req.body.puesto,
+        req.body.rfc,
+        req.body.direccion,
+        req.body.identificacion,
+        req.body.cantidadCuentas,
+        req.body.tiposTarjetas,
         req.body.telefono
     )
     res.status(201).json({
       status: 'success',
       data: {
-        administrador: req.body
+        cliente: req.body
       }
     });
 
@@ -31,49 +33,51 @@ exports.insert =  async (req, res) =>{
   }
 };
 
-//Obtener la lista de administradores 
+//Obtener la lista de clientes 
 exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
-    control.administrador.obtenerTodos().then(admin => {
-      res.send(admin)
+    control.cliente.obtenerTodos().then(cliente => {
+      res.send(cliente)
     })
   }catch(err){
     res.send(err);
   }
 }
 
-//Obtener administrador 
+//Obtener cliente 
 exports.get = async (req, res, next) =>{
   try{
     // Interacción con el acceso a datos
-    control.administrador.obtener(req.params.userId).then(admin => {
-      res.send(admin[0])
+    control.cliente.obtener(req.params.userId).then(cliente => {
+      res.send(cliente[0])
     })
   }catch(err){
     res.send(err);
   }
 }
 
-//Update Administrador
+//Update cliente
 exports.update = async (req, res, next) => {
   try {
     // Interacción con el acceso a datos
-    await control.administrador.actualizar(
-      req.params.userId,
-      req.body.nombre,
-      req.body.contrasenia,
-      req.body.fechaRegistro,
-      req.body.email,
-      req.body.nombreAdministrador,
-      req.body.area,
-      req.body.puesto,
-      req.body.telefono)
+    control.cliente.actualizar(
+        req.body.userId,
+        req.body.nombre,
+        req.body.contrasenia,
+        req.body.fechaRegistro,
+        req.body.email,
+        req.body.rfc,
+        req.body.direccion,
+        req.body.identificacion,
+        req.body.cantidadCuentas,
+        req.body.tiposTarjetas,
+        req.body.telefono)
 
-    await control.administrador.obtener(req.params.userId).then(admin => {
+    control.cliente.obtener(req.params.userId).then(cliente => {
       res.status(200).json({
       status: 'success',
-      administrador: (admin[0])
+      cliente: (cliente[0])
       }); 
     })
   } catch (error) {
@@ -81,15 +85,15 @@ exports.update = async (req, res, next) => {
   }
 };
 
-//Delete Administrador 
+//Delete cliente 
 exports.delete = async (req, res) =>{
   //Interacción con la base de datos
-  control.administrador.eliminar(req.params.userId);
+  control.cliente.eliminar(req.params.userId);
 
   try {
     res.status(204).json({
       status: 'success',
-      adminisstrador: null
+      cliente: null
     });
   } catch (error) {
       res.send(error);
