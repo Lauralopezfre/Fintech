@@ -1,17 +1,14 @@
 const Colecciones = require("../data/Conexion");
 
-const insertar = (tarjeta) => {
-  const insertarTarjeta = new Colecciones.tarjeta(tarjeta);
-
-  insertarTarjeta
-    .save()
-    .then((doc) => {
-      console.log("Se ha guardado la tarjeta: " + doc);
-    })
-    .catch((error) => {
-      console.log("Ha ocurrido un error: " + error);
-    });
+const insertar = async(tarjeta) => {
+  try{
+    return await new Colecciones.tarjeta(tarjeta);
+  }catch(error) {
+    console.log("Ha ocurrido un error: " + error);
+    return null
+  }
 };
+
 const remover = (tarjeta) => {
   const borrarTarjeta = async () => {
     return await Colecciones.tarjeta.deleteOne(tarjeta);

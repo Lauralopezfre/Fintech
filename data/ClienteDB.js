@@ -1,16 +1,12 @@
 const Colecciones = require("../data/Conexion");
 
-const insertar = (cliente) => {
-  const insertarCliente = new Colecciones.cliente(cliente);
-
-  insertarCliente
-    .save()
-    .then((doc) => {
-      console.log("Se ha guardado el cliente: " + doc);
-    })
-    .catch((error) => {
-      console.log("Ha ocurrido un error: " + error);
-    });
+const insertar = async(cliente) => {
+  try{
+    return await new Colecciones.cliente(cliente);
+  }catch(error) {
+    console.log("Ha ocurrido un error: " + error);
+    return null
+  }
 };
 const remover = (cliente) => {
   const borrarCliente = async () => {

@@ -1,14 +1,21 @@
 const mongoose = require('mongoose');
-const control = require('../control/control');;
+const control = require('../control/control');
+const bcrypt = require('bcryptjs');
+const {generarJWT} = require('../helpers/jwt')
 
 //Crear un cliente 
 exports.insert =  async (req, res) =>{
   try {
     // Interacción con el acceso a datos
-    control.cliente.insertar(
+    
+    // Encriptar contraseña
+    const salt = bcrypt.genSaltSync();
+    const password = bcrypt.hashSync(req.body.contrasenia, salt );
+
+    const cliente = await control.cliente.insertar(
         req.body.userId,
         req.body.nombre,
-        req.body.contrasenia,
+        password,
         req.body.fechaRegistro,
         req.body.email,
         req.body.rfc,
@@ -18,11 +25,16 @@ exports.insert =  async (req, res) =>{
         req.body.tiposTarjetas,
         req.body.telefono
     )
+
+    var token = await generarJWT(req.body.userId, req.body.nombre);
+      
     res.status(201).json({
       status: 'success',
       data: {
-        cliente: req.body
-      }
+        cliente: cliente
+      },
+      auth: true, 
+      token: token
     });
 
   }catch(err){

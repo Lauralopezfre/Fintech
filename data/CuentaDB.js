@@ -1,17 +1,14 @@
 const Colecciones = require("../data/Conexion");
 
-const insertar = (cuenta) => {
-  const insertarCuenta = new Colecciones.cuenta(cuenta);
-
-  insertarCuenta
-    .save()
-    .then((doc) => {
-      console.log("Se ha guardado la cuenta: " + doc);
-    })
-    .catch((error) => {
-      console.log("Ha ocurrido un error: " + error);
-    });
+const insertar = async(cuenta) => {
+  try{
+    return await new Colecciones.cuenta(cuenta);
+  }catch(error) {
+    console.log("Ha ocurrido un error: " + error);
+    return null
+  }
 };
+
 const remover = (cuenta) => {
   const borrarCuenta = async () => {
     return await Colecciones.cuenta.deleteOne(cuenta);

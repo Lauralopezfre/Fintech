@@ -1,17 +1,14 @@
 const Colecciones = require("../data/Conexion");
 
-const insertar = (movimiento) => {
-  const insertarCuenta = new Colecciones.movimiento(movimiento);
-
-  insertarCuenta
-    .save()
-    .then((doc) => {
-      console.log("Se ha guardado el movimiento: " + doc);
-    })
-    .catch((error) => {
-      console.log("Ha ocurrido un error: " + error);
-    });
+const insertar = async(movimiento) => {
+  try{
+    return await new Colecciones.movimiento(movimiento);
+  }catch(error) {
+    console.log("Ha ocurrido un error: " + error);
+    return null
+  }
 };
+
 const remover = (cuenta) => {
   const borrarCuenta = async () => {
     return await Colecciones.movimiento.deleteOne(cuenta);

@@ -11,7 +11,7 @@ const Cuenta = require("../clases/Cuenta");
 
 //** CLIENTE */
 
-const insertarCliente = (
+const insertarCliente = async(
   userId,
   nombre,
   contrasenia,
@@ -40,7 +40,7 @@ const insertarCliente = (
     telefono
   );
 
-  ClienteBD.insertar(cliente);
+  return await ClienteBD.insertar(cliente);
 };
 
 const actualizarCliente = async(
@@ -159,7 +159,7 @@ const eliminarAdministrador = (userId) => {
 
 //** CUENTA */
 
-const insertarCuenta = (
+const insertarCuenta = async(
   balance,
   estadoCuenta,
   reporte,
@@ -176,7 +176,7 @@ const insertarCuenta = (
     titular
   );
 
-  CuentaBD.insertar(cuenta);
+  return await CuentaBD.insertar(cuenta);
 };
 
 const actualizarCuenta = async(
@@ -215,7 +215,7 @@ const eliminarCuenta = (titular) => {
 
 //** TARJETA */
 
-const insertarTarjeta = (
+const insertarTarjeta = async(
   numero,
   chip,
   cvv,
@@ -234,7 +234,7 @@ const insertarTarjeta = (
     tipoTarjeta
   );
 
-  TarjetaBD.insertar(tarjeta);
+  return await TarjetaBD.insertar(tarjeta);
 };
 
 const actualizarTarjeta = async(
@@ -275,7 +275,7 @@ const eliminarTarjeta = (numero) => {
 
 //** MOVIMIENTO */
 
-const insertarMovimiento = (
+const insertarMovimiento = async(
   idMovimiento,
   cantidad,
   claveRastreo,
@@ -290,7 +290,7 @@ const insertarMovimiento = (
     bancoReceptor
   );
 
-  MovimientoBD.insertar(mov);
+  return await MovimientoBD.insertar(mov);
 };
 
 const actualizarMovimiento = (

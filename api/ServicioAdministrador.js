@@ -1,14 +1,22 @@
 const mongoose = require('mongoose');
-const control = require('../control/control');;
+const control = require('../control/control');
+const bcrypt = require('bcryptjs');
+const {generarJWT} = require('../helpers/jwt')
+const jwt = require('jsonwebtoken')
 
 //Crear un administrador 
 exports.insert =  async (req, res) =>{
   try {
     // Interacción con el acceso a datos
-    control.administrador.insertar(
+    
+    // Encriptar contraseña
+    const salt = bcrypt.genSaltSync();
+    const password = bcrypt.hashSync( req.body.contrasenia, salt );
+
+    const admin = await control.administrador.insertar(
         req.body.userId,
         req.body.nombre,
-        req.body.contrasenia,
+        password,
         req.body.fechaRegistro,
         req.body.email,
         req.body.nombreAdministrador,
@@ -16,11 +24,16 @@ exports.insert =  async (req, res) =>{
         req.body.puesto,
         req.body.telefono
     )
+
+    var token = await generarJWT(req.body.userId, req.body.nombre);
+
     res.status(201).json({
       status: 'success',
       data: {
-        administrador: req.body
-      }
+        administrador: admin
+      },
+      auth: true, 
+      token: token
     });
 
   }catch(err){
@@ -59,6 +72,7 @@ exports.get = async (req, res, next) =>{
 exports.update = async (req, res, next) => {
   try {
     // Interacción con el acceso a datos
+    
     await control.administrador.actualizar(
       req.params.userId,
       req.body.nombre,

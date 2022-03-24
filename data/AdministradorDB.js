@@ -1,16 +1,12 @@
 const Colecciones = require("../data/Conexion");
 
-const insertar = (administrador) => {
-  const insertarAdministrador = new Colecciones.administrador(administrador);
-
-  insertarAdministrador
-    .save()
-    .then((doc) => {
-      console.log("Se ha guardado el administrador: " + doc);
-    })
-    .catch((error) => {
-      console.log("Ha ocurrido un error: " + error);
-    });
+const insertar = async(administrador) => {
+  try{
+    return await new Colecciones.administrador(administrador);
+  }catch(error) {
+    console.log("Ha ocurrido un error: " + error);
+    return null
+  }
 };
 
 const remover = (administrador) => {
@@ -52,8 +48,6 @@ const actualizar = async (a) => {
       },
     }
   );
-  console.log(`${actualizarAdmin.matchedCount} cliente va a ser modificado`);
-  console.log(`${actualizarAdmin.modifiedCount} cliente ha sido modificado`);
 };
 
 module.exports = AdministradorsDB = {
