@@ -41,7 +41,7 @@ routerCuenta.route("/").get(ServicioCuenta.getAll);
 // Obtener una cuenta
 routerCuenta.route("/:userId").get(ServicioCuenta.get);
 // Borrar una cuenta
-routerCuenta.route("/:userId").delete(ServicioCliente.delete);
+routerCuenta.route("/:userId").delete(ServicioCuenta.delete);
 // Actualizar una cuenta
 routerCuenta.route("/:userId").put(ServicioCuenta.update);
 

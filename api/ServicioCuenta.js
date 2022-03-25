@@ -51,7 +51,7 @@ exports.getAll = async (req, res) =>{
 exports.get = async (req, res, next) =>{
   try{
     // Interacción con el acceso a datos
-    const cliente = await control.cliente(req.params.userId)
+    const cliente = await control.cliente.obtener(req.params.userId)
     const cuenta = await control.cuenta.obtener(cliente[0])
 
     if(!cuenta[0]){
@@ -110,7 +110,7 @@ exports.update = async (req, res, next) => {
 //Delete cuenta 
 exports.delete = async (req, res, next) =>{
   try {
-    const cliente = await control.cliente(req.params.userId)
+    const cliente = await control.cliente.obtener(req.params.userId)
 
     if(!cliente[0]){
       return next(new MiddlewareError('El cliente no fue encontrado', 404));
