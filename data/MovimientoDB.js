@@ -2,7 +2,9 @@ const Colecciones = require("../data/Conexion");
 
 const insertar = async(movimiento) => {
   try{
-    return await new Colecciones.movimiento(movimiento);
+    const c = await new Colecciones.movimiento(movimiento);
+    c.save()
+    return await c
   }catch(error) {
     console.log("Ha ocurrido un error: " + error);
     return null

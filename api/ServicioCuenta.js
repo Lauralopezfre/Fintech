@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const control = require('../control/control');const { cuenta, cliente } = require('../data/Conexion');
-;
+const MiddlewareError = require('../helpers/MiddlewareError');
 
 //Crear un cuenta 
 exports.insert =  async (req, res) =>{
   try {
     // Interacción con el acceso a datos
-    control.cuenta.insertar(
+    const c = await control.cuenta.insertar(
       req.body.balance,
       req.body.estadoCuenta,
       req.body.reporte,
@@ -17,7 +17,7 @@ exports.insert =  async (req, res) =>{
     res.status(201).json({
       status: 'success',
       data: {
-        cuenta: req.body
+        cuenta: c
       }
     });
 
@@ -33,11 +33,17 @@ exports.insert =  async (req, res) =>{
 exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
-    control.cuenta.obtenerTodos().then(cuenta => {
-      res.send(cuenta)
-    })
+    const cuentas = await control.cuenta.obtenerTodos()
+
+    res.status(200).json({
+      status: 'sucess',
+      cuenta: cuentas[0]
+    });
   }catch(err){
-    res.send(err);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 }
 
@@ -45,13 +51,22 @@ exports.getAll = async (req, res) =>{
 exports.get = async (req, res, next) =>{
   try{
     // Interacción con el acceso a datos
-    control.cliente(req.params.userId).then(cliente => {
-      control.cuenta.obtener(cliente[0]).then(cuenta => {
-        res.send(cuenta[0])
-      });
+    const cliente = await control.cliente(req.params.userId)
+    const cuenta = await control.cuenta.obtener(cliente[0])
+
+    if(!cuenta[0]){
+      return next(new MiddlewareError('La cuenta no fue encontrada', 404));
+    }
+
+    res.status(200).json({
+      status: 'sucess',
+      cuenta: cuenta[0]
     });
   }catch(err){
-    res.send(err);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 }
 
@@ -59,7 +74,7 @@ exports.get = async (req, res, next) =>{
 exports.update = async (req, res, next) => {
   try {
     // Interacción con el acceso a datos
-    control.administrador.actualizar(
+    await control.administrador.actualizar(
       req.body.balance,
       req.body.estadoCuenta,
       req.body.reporte,
@@ -68,35 +83,50 @@ exports.update = async (req, res, next) => {
       req.body.titular)
 
 
-    control.cliente(req.params.userId).then(cliente => {
-      control.cuenta.obtener(cliente[0]).then(cuenta => {
-        res.status(200).json({
-          status: 'success',
-          cuenta: (cuenta[0])
-          });
+    const cliente = await control.cliente(req.params.userId)
+
+    if(!cliente[0]){
+      return next(new MiddlewareError('El cliente no fue encontrado', 404));
+    }
+
+    const cuenta = await control.cuenta.obtener(cliente[0])
+
+    if(!cuenta[0]){
+      return next(new MiddlewareError('La cuenta no fue encontrada', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      cuenta: (cuenta[0])
       });
-    });
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 };
 
 //Delete cuenta 
-exports.delete = async (req, res) =>{
-  //Interacción con la base de datos
-  
-
+exports.delete = async (req, res, next) =>{
   try {
-    control.cliente(req.params.userId).then(cliente => {
-      control.cuenta.eliminar(cliente[0]).then(cuenta => {
-        res.status(204).json({
-          status: 'success',
-          adminisstrador: null
-        });
-      });
+    const cliente = await control.cliente(req.params.userId)
+
+    if(!cliente[0]){
+      return next(new MiddlewareError('El cliente no fue encontrado', 404));
+    }
+
+    await control.cuenta.eliminar(cliente[0])
+
+    res.status(204).json({
+      status: 'success',
+      adminisstrador: null
     });
-    
+
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: error
+    });
   }   
 }

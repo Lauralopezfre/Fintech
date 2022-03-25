@@ -2,7 +2,9 @@ const Colecciones = require("../data/Conexion");
 
 const insertar = async(administrador) => {
   try{
-    return await new Colecciones.administrador(administrador);
+    const c = await new Colecciones.administrador(administrador);
+    c.save()
+    return await c
   }catch(error) {
     console.log("Ha ocurrido un error: " + error);
     return null
@@ -41,7 +43,7 @@ const actualizar = async (a) => {
         contrasenia: a.contrasenia,
         fechaRegistro: a.fechaRegistro,
         email: a.email,
-        nombreAdministrador: a.email,
+        nombreAdministrador: a.nombreAdministrador,
         area: a.area,
         puesto: a.puesto,
         telefono: a.telefono,

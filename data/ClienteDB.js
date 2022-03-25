@@ -2,7 +2,9 @@ const Colecciones = require("../data/Conexion");
 
 const insertar = async(cliente) => {
   try{
-    return await new Colecciones.cliente(cliente);
+    const c = await new Colecciones.cliente(cliente);
+    c.save()
+    return await c
   }catch(error) {
     console.log("Ha ocurrido un error: " + error);
     return null

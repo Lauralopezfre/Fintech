@@ -2,13 +2,18 @@ const mongoose = require('mongoose');
 const control = require('../control/control');
 const bcrypt = require('bcryptjs');
 const {generarJWT} = require('../helpers/jwt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const MiddlewareError = require('../helpers/MiddlewareError');
+const { validarEmail, validarPassword } = require('../controller/validaciones');
 
 //Crear un administrador 
-exports.insert =  async (req, res) =>{
+exports.insert =  async (req, res, next) =>{
   try {
-    // Interacción con el acceso a datos
-    
+    //Validación
+    if(!validarPassword(req.body.contrasenia)){
+      return next(new MiddlewareError('La dirección de email no es correcta', 400));
+    }
+
     // Encriptar contraseña
     const salt = bcrypt.genSaltSync();
     const password = bcrypt.hashSync( req.body.contrasenia, salt );
@@ -48,9 +53,11 @@ exports.insert =  async (req, res) =>{
 exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
-    control.administrador.obtenerTodos().then(admin => {
-      res.send(admin)
-    })
+    const administradores = await control.administrador.obtenerTodos()
+    res.status(200).json({
+      status: 'sucess',
+      administradores: administradores
+    });
   }catch(err){
     res.send(err);
   }
@@ -60,9 +67,16 @@ exports.getAll = async (req, res) =>{
 exports.get = async (req, res, next) =>{
   try{
     // Interacción con el acceso a datos
-    control.administrador.obtener(req.params.userId).then(admin => {
-      res.send(admin[0])
-    })
+    const admin = await control.administrador.obtener(req.params.userId);
+
+    if(!admin[0]){
+      return next(new MiddlewareError('El administrador no fue encontrado', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      administrador: admin[0]
+    });
   }catch(err){
     res.send(err);
   }
@@ -84,28 +98,36 @@ exports.update = async (req, res, next) => {
       req.body.puesto,
       req.body.telefono)
 
-    await control.administrador.obtener(req.params.userId).then(admin => {
-      res.status(200).json({
+    const admin = await control.administrador.obtener(req.params.userId)
+
+    if(!admin[0]){
+      return next(new MiddlewareError('El administrador no fue encontrado', 404));
+    }
+
+    res.status(200).json({
       status: 'success',
       administrador: (admin[0])
-      }); 
-    })
+    }); 
+
   } catch (error) {
       res.send(error);
   }
 };
 
 //Delete Administrador 
-exports.delete = async (req, res) =>{
-  //Interacción con la base de datos
-  control.administrador.eliminar(req.params.userId);
-
+exports.delete = async (req, res, next) =>{
   try {
+    //Interacción con la base de datos
+    await control.administrador.eliminar(req.params.userId);
+
     res.status(204).json({
       status: 'success',
-      adminisstrador: null
+      administrador: null
     });
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: error
+    });
   }   
 }

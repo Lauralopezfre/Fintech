@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
-const control = require('../control/control');;
+const control = require('../control/control');
+const MiddlewareError = require('../helpers/MiddlewareError');
 
 //Crear un movimiento 
 exports.insert =  async (req, res) =>{
   try {
     // Interacción con el acceso a datos
-    control.movimiento.insertar(
+    const mov = await control.movimiento.insertar(
         req.body.idMovimiento,
         req.body.cantidad,
         req.body.claveRastreo,
@@ -15,7 +16,7 @@ exports.insert =  async (req, res) =>{
     res.status(201).json({
       status: 'success',
       data: {
-        movimiento: req.body
+        movimiento: mov
       }
     });
 
@@ -31,11 +32,16 @@ exports.insert =  async (req, res) =>{
 exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
-    control.movimiento.obtenerTodos().then(mov => {
-      res.send(mov)
-    })
+    const mov = await control.movimiento.obtenerTodos()
+    res.status(200).json({
+      status: 'sucess',
+      movimientos: mov
+    });
   }catch(err){
-    res.send(err);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 }
 
@@ -43,11 +49,21 @@ exports.getAll = async (req, res) =>{
 exports.get = async (req, res, next) =>{
   try{
     // Interacción con el acceso a datos
-    control.movimiento.obtener(req.params.idMovimiento).then(mov => {
-      res.send(mov[0])
-    })
+    const mov = await control.movimiento.obtener(req.params.idMovimiento)
+
+    if(!mov[0]){
+      return next(new MiddlewareError('El movimiento no fue encontrado', 404));
+    }
+
+    res.status(200).json({
+      status: 'sucess',
+      movimientos: mov[0]
+    });
   }catch(err){
-    res.send(err);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 }
 
@@ -55,35 +71,45 @@ exports.get = async (req, res, next) =>{
 exports.update = async (req, res, next) => {
   try {
     // Interacción con el acceso a datos
-    control.movimiento.actualizar(
+    await control.movimiento.actualizar(
         req.params.idMovimiento,
         req.body.cantidad,
         req.body.claveRastreo,
         req.body.fechaHora,
         req.body.bancoReceptor)
 
-    control.movimiento.obtener(req.params.idMovimiento).then(mov => {
-      res.status(200).json({
+    const mov = await control.movimiento.obtener(req.params.idMovimiento)
+
+    if(!mov[0]){
+      return next(new MiddlewareError('El movimiento no fue encontrado', 404));
+    }
+    
+    res.status(200).json({
       status: 'success',
       movimiento: (mov[0])
-      }); 
     })
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: error
+    });
   }
 };
 
 //Delete movimiento 
-exports.delete = async (req, res) =>{
-  //Interacción con la base de datos
-  control.movimiento.eliminar(req.params.idMovimiento);
-
+exports.delete = async (req, res, next) =>{
   try {
+    //Interacción con la base de datos
+    await control.movimiento.eliminar(req.params.idMovimiento);
+
     res.status(204).json({
       status: 'success',
       movimiento: null
     });
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: error
+    });
   }   
 }

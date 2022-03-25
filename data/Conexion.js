@@ -7,7 +7,7 @@ require('dotenv').config();
 // Conexión con la base de datos
 const conexion = async () => {
   try {
-    await mongoose.connect(process.env.DATABASE_LOCAL);
+    await mongoose.connect("mongodb://localhost:27017/fintech");
     console.log("Conexión exitosa");
   } catch (error) {
     console.log("No se pudó conectar por: " + error);

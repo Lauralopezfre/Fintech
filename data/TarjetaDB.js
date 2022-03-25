@@ -2,7 +2,9 @@ const Colecciones = require("../data/Conexion");
 
 const insertar = async(tarjeta) => {
   try{
-    return await new Colecciones.tarjeta(tarjeta);
+    const c = await new Colecciones.tarjeta(tarjeta);
+    c.save()
+    return await c
   }catch(error) {
     console.log("Ha ocurrido un error: " + error);
     return null

@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
-const control = require('../control/control');;
+const control = require('../control/control');
+const { validarNumero } = require('../controller/validaciones');
+const MiddlewareError = require('../helpers/MiddlewareError');
 
 //Crear tarjeta 
-exports.insert =  async (req, res) =>{
+exports.insert =  async (req, res, next) =>{
   try {
+    //Validación
+    // if(validarNumero(req.body.numero) == false){
+    //   return next(new MiddlewareError("No es un número de Visa o Mastercard correcto", 404));
+    // }
+
     // Interacción con el acceso a datos
-    control.tarjeta.insertar(
+    const tarjeta = await control.tarjeta.insertar(
         req.body.numero,
         req.body.chip,
         req.body.cvv,
@@ -17,7 +24,7 @@ exports.insert =  async (req, res) =>{
     res.status(201).json({
       status: 'success',
       data: {
-        tarjeta: req.body
+        tarjeta: tarjeta
       }
     });
 
@@ -33,11 +40,16 @@ exports.insert =  async (req, res) =>{
 exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
-    control.tarjeta.obtenerTodos().then(tarjeta => {
-      res.send(tarjeta)
-    })
+    const tarjetas = await control.tarjeta.obtenerTodos()
+    res.status(200).json({
+      status: 'success',
+      tarjetas: tarjetas
+    });
   }catch(err){
-    res.send(err);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 }
 
@@ -45,11 +57,21 @@ exports.getAll = async (req, res) =>{
 exports.get = async (req, res, next) =>{
   try{
     // Interacción con el acceso a datos
-    control.tarjeta.obtener(req.params.numero).then(tarjet => {
-      res.send(tarjet[0])
-    })
+    const t = await control.tarjeta.obtener(req.params.numero)
+
+    if(!t[0]){
+      return next(new MiddlewareError('La tarjeta no fue encontrada', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      tarjeta: t[0]
+    });
   }catch(err){
-    res.send(err);
+    res.status(400).json({
+      status: 'fail',
+      message: err
+    });
   }
 }
 
@@ -57,7 +79,7 @@ exports.get = async (req, res, next) =>{
 exports.update = async (req, res, next) => {
   try {
     // Interacción con el acceso a datos
-    control.movimiento.actualizar(
+    await control.tarjeta.actualizar(
         req.params.numero,
         req.body.chip,
         req.body.cvv,
@@ -66,28 +88,38 @@ exports.update = async (req, res, next) => {
         req.body.clabeInterbancaria,
         req.body.tipoTarjeta)
 
-    control.tarjeta.obtener(req.params.numero).then(tarjet => {
-      res.status(200).json({
-      status: 'success',
-      movimiento: (tarjet[0])
-      }); 
-    })
+    const tarjet = await control.tarjeta.obtener(req.params.numero)
+
+    if(!tarjet[0]){
+      return next(new MiddlewareError('La tarjeta no fue encontrada', 404));
+    }
+
+    res.status(200).json({
+    status: 'success',
+    movimiento: (tarjet[0])
+    });
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: error
+    });
   }
 };
 
 //Delete tarjeta 
 exports.delete = async (req, res) =>{
-  //Interacción con la base de datos
-  control.tarjeta.eliminar(req.params.numero);
-
   try {
+    //Interacción con la base de datos
+    await control.tarjeta.eliminar(req.params.numero);
+
     res.status(204).json({
       status: 'success',
       tarjeta: null
     });
   } catch (error) {
-      res.send(error);
+    res.status(400).json({
+      status: 'fail',
+      message: error
+    });
   }   
 }

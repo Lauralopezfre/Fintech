@@ -83,10 +83,9 @@ const obtenerCliente = async (userId) => {
   return await ClienteBD.obtener(userId);
 };
 
-const eliminarCliente = (userId) => {
-  obtenerCliente(userId).then((cliente) => {
-    ClienteBD.eliminar(cliente[0]);
-  });
+const eliminarCliente = async(userId) => {
+  const cliente = await obtenerCliente(userId)
+  await ClienteBD.eliminar(cliente[0]);
 };
 
 //** ADMINISTRADOR */
@@ -151,10 +150,9 @@ const obtenerAdministrador =  async (userId) => {
   return await AdministradorBD.obtener(userId);
 };
 
-const eliminarAdministrador = (userId) => {
-  obtenerAdministrador(userId).then((administrador) => {
-    AdministradorBD.eliminar(administrador[0]);
-  });
+const eliminarAdministrador = async(userId) => {
+  const admin = await obtenerAdministrador(userId)
+  await AdministradorBD.eliminar(admin);
 };
 
 //** CUENTA */
@@ -207,10 +205,9 @@ const obtenerCuenta = async(titular) => {
   return await CuentaBD.obtener(titular);
 };
 
-const eliminarCuenta = (titular) => {
-  obtenerCuenta(titular).then((cuenta) => {
-    CuentaBD.eliminar(cuenta[0]);
-  });
+const eliminarCuenta = async(titular) => {
+  const c = await obtenerCuenta(titular)
+  await CuentaBD.eliminar(c[0]);
 };
 
 //** TARJETA */
@@ -267,10 +264,9 @@ const obtenerTarjeta = async(numero) => {
   return await TarjetaBD.obtener(numero);
 };
 
-const eliminarTarjeta = (numero) => {
-  obtenerTarjeta(numero).then((tarjeta) => {
-    TarjetaBD.eliminar(tarjeta[0]);
-  });
+const eliminarTarjeta = async(numero) => {
+  const t = await obtenerTarjeta(numero)
+  await TarjetaBD.eliminar(t[0]);
 };
 
 //** MOVIMIENTO */
@@ -319,10 +315,9 @@ const obtenerMovimiento = (idMovimiento) => {
   return MovimientoBD.obtener(idMovimiento);
 };
 
-const eliminarMovimiento = (idMovimiento) => {
-  obtenerMovimiento(idMovimiento).then((mov) => {
-    MovimientoBD.eliminar(mov[0]);
-  });
+const eliminarMovimiento = async (idMovimiento) => {
+  const mov = await obtenerMovimiento(idMovimiento)
+  await MovimientoBD.eliminar(mov[0]);
 };
 
 module.exports = {

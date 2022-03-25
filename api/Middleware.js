@@ -14,7 +14,7 @@ app.use("/api/movimiento", routerMovimiento);
 app.use("/api/tarjeta", routerTarjeta);
 app.use(function(err, req, res, next) {
     console.error(err.stack);
-    res.status(500).send('Algo salio mal!');
+    res.status(404).send('Algo salio mal!');
 });
 
 module.exports = app
