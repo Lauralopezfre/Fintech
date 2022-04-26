@@ -14,6 +14,8 @@ exports.insert =  async (req, res) =>{
       req.body.tipoCuenta,
       req.body.titular
     )
+
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(201).json({
       status: 'success',
       data: {
@@ -35,6 +37,7 @@ exports.getAll = async (req, res) =>{
     // Interacción con el acceso a datos
     const cuentas = await control.cuenta.obtenerTodos()
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'sucess',
       cuenta: cuentas[0]
@@ -58,6 +61,8 @@ exports.get = async (req, res, next) =>{
       return next(new MiddlewareError('La cuenta no fue encontrada', 404));
     }
 
+
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'sucess',
       cuenta: cuenta[0]
@@ -95,10 +100,12 @@ exports.update = async (req, res, next) => {
       return next(new MiddlewareError('La cuenta no fue encontrada', 404));
     }
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'success',
       cuenta: (cuenta[0])
       });
+
   } catch (error) {
     res.status(400).json({
       status: 'fail',
@@ -118,6 +125,7 @@ exports.delete = async (req, res, next) =>{
 
     await control.cuenta.eliminar(cliente[0])
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(204).json({
       status: 'success',
       adminisstrador: null

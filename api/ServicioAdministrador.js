@@ -32,6 +32,7 @@ exports.insert =  async (req, res, next) =>{
 
     var token = await generarJWT(req.body.userId, req.body.nombre);
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(201).json({
       status: 'success',
       data: {
@@ -54,6 +55,8 @@ exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
     const administradores = await control.administrador.obtenerTodos()
+
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'sucess',
       administradores: administradores
@@ -73,6 +76,7 @@ exports.get = async (req, res, next) =>{
       return next(new MiddlewareError('El administrador no fue encontrado', 404));
     }
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'success',
       administrador: admin[0]
@@ -104,6 +108,7 @@ exports.update = async (req, res, next) => {
       return next(new MiddlewareError('El administrador no fue encontrado', 404));
     }
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'success',
       administrador: (admin[0])
@@ -120,6 +125,7 @@ exports.delete = async (req, res, next) =>{
     //Interacción con la base de datos
     await control.administrador.eliminar(req.params.userId);
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(204).json({
       status: 'success',
       administrador: null

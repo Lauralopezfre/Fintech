@@ -21,6 +21,8 @@ exports.insert =  async (req, res, next) =>{
         req.body.clabeInterbancaria,
         req.body.tipoTarjeta
     )
+
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(201).json({
       status: 'success',
       data: {
@@ -41,6 +43,8 @@ exports.getAll = async (req, res) =>{
   try{
     // Interacción con el acceso a datos
     const tarjetas = await control.tarjeta.obtenerTodos()
+
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'success',
       tarjetas: tarjetas
@@ -63,6 +67,7 @@ exports.get = async (req, res, next) =>{
       return next(new MiddlewareError('La tarjeta no fue encontrada', 404));
     }
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'success',
       tarjeta: t[0]
@@ -94,6 +99,7 @@ exports.update = async (req, res, next) => {
       return next(new MiddlewareError('La tarjeta no fue encontrada', 404));
     }
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
     status: 'success',
     movimiento: (tarjet[0])
@@ -112,6 +118,7 @@ exports.delete = async (req, res) =>{
     //Interacción con la base de datos
     await control.tarjeta.eliminar(req.params.numero);
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.status(204).json({
       status: 'success',
       tarjeta: null
