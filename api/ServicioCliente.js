@@ -32,7 +32,8 @@ exports.insert =  async (req, res, next) =>{
         req.body.direccion,
         req.body.identificacion,
         req.body.cantidadCuentas,
-        req.body.tiposTarjetas,
+        req.body.tipoCuenta,
+        req.body.tipoTarjeta,
         req.body.telefono
     )
 
