@@ -11,7 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Fintech</title>
+    <script src="../actions/Clientes.js"></script>
+    <title>Crear Cliente</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -85,6 +86,7 @@
         </ul>
       </div>
     </nav>
+
     <div
       style="
         background: gray;
@@ -92,49 +94,52 @@
         font-family: Arial, Helvetica, sans-serif;
         font-weight: bold;
         text-align: center;
+        padding: 10px;
       "
     >
-      <h3>Información de tarjeta de clientes</h3>
+      <h1>Fintech</h1>
+      <h3>Información de empleado</h3>
     </div>
 
-    <table>
-      <tr>
-        <th>Titular</th>
-        <th>Tipo de cuenta</th>
-        <th>Balance</th>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
+    <form target="_blank">
+      <p>Nombre completo: <input type="text" name="nombrecompleto" /></p>
+      <p>Contraseña: <input type="text" name="contrasenia" /></p>
+      <p>RFC: <input type="text" name="rfc" /></p>
+      <p>Dirección <input type="text" name="direccion" /></p>
+      <p>Identificación <input type="file" id="myFile" accept="image/*" onchange="cargarArchivos(this.files)"/>></p>
+      <p>
+        Tipo de cuenta: 
+        <input type="radio" name="cheques"/> Cheques
+        <input type="radio" name="ahorros"/> Ahorros
+      </p>
+      <p>
+        Tipo de tarjeta: 
+        <input type="radio" name="visa"/> Visa
+        <input type="radio" name="mastercard"/> Mastercard
+      </p>
+      <p>Telefono <input type="text" name="telefono" /></p>
+      <p>E-mail <input type="text" name="email" /></p>
 
-    <button id="consultarTarjetas">Consultar información de tarjetas</button>
-    <button id="cancel">Cancelar</button>
-
-    <div>
-      <p>Todos los derechos reservados.</p>
-    </div>
+      
+    </form>
+    <button type="submit" onclick="crearCliente()" value="Crear cliente" />
   </body>
 
   <style>
-    table {
+    form {
       font-family: arial, sans-serif;
       border-collapse: collapse;
       width: 100%;
-      margin-bottom: 3%;
+      padding: 60px;
     }
 
-    td,
-    th {
+    p {
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
     }
 
-    tr:nth-child(even) {
+    p:nth-child(even) {
       background-color: #dddddd;
     }
   </style>

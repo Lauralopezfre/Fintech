@@ -38,14 +38,9 @@ exports.insert =  async (req, res, next) =>{
 
     var token = await generarJWT(req.body.userId, req.body.nombre);
     
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', "*");
     res.status(201).json({
-      status: 'success',
-      data: {
-        cliente: cliente
-      },
-      auth: true, 
-      token: token
+      cliente: cliente,
     });
 
   }catch(err){

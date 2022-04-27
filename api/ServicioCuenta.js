@@ -40,7 +40,7 @@ exports.getAll = async (req, res) =>{
     res.header('Access-Control-Allow-Origin', '*');
     res.status(200).json({
       status: 'sucess',
-      cuenta: cuentas[0]
+      cuenta: cuentas
     });
   }catch(err){
     res.status(400).json({

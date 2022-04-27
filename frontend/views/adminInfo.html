@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../actions/Administrador.js"></script>
     <title>Fintech</title>
   </head>
   <body>
@@ -27,60 +28,28 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\adminInfo.html"
-              >Información de administrador</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\adminInfo.html">Información de administrador</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\cuentaInfo.html"
-              >Información de cuenta</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\cuentaInfo.html">Información de cuenta</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\listaClientes.html"
-              >Lista de clientes</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\listaClientes.html">Lista de clientes</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\tarjeta.html"
-              >Lista de tarjetas</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\tarjeta.html">Lista de tarjetas</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\crearAdministrador.html"
-              >Crear Administrador</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\crearAdministrador.html">Crear Administrador</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\crearCliente.html"
-              >Crear Cliente</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\crearCliente.html">Crear Cliente</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\crearCuenta.html"
-              >Crear Cuenta</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\crearCuenta.html">Crear Cuenta</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="C:\Users\Werta\Desktop\Template\Fintech\crearMovimiento.html"
-              >Crear Movimiento</a
-            >
+            <a class="nav-link" href="C:\Users\Werta\Desktop\Template\Fintech\crearMovimiento.html">Crear Movimiento</a>
           </li>
         </ul>
       </div>
@@ -94,25 +63,24 @@
         text-align: center;
       "
     >
-      <h3>Información de lista de clientes</h3>
+      <h3>Información de empleado</h3>
     </div>
 
-    <table>
-      <tr>
-        <th>Tipo de tarjeta</th>
-        <th>Número de tarjeta</th>
-        <th>CVV</th>
-        <th>Fecha de vencimiento</th>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
+    <div class="table">
+      <table>
+        <tr>
+          <th>Nombre</th>
+          <th>Fecha de registro</th>
+          <th>E-mail</th>
+          <th>Área</th>
+        </tr>
+        <tr>
+  
+        </tr>
+      </table>
+    </div>
 
-    <button id="consultarTarjetas">Consultar información de tarjetas</button>
+    <button id="consultarEmpleados" onclick="desplegarTabla()">Consultar empleados</button>
     <button id="cancel">Cancelar</button>
 
     <div>
@@ -125,7 +93,10 @@
       font-family: arial, sans-serif;
       border-collapse: collapse;
       width: 100%;
-      margin-bottom: 3%;
+    }
+
+    .table{
+      padding: 65px;
     }
 
     td,
