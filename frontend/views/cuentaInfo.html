@@ -112,15 +112,28 @@
           <td></td> -->
         </tr>
       </table>
-      <input type="button" value="Mostrar datos" onclick="desplegarTabla()">
+      <input type="button" value="Mostrar datos" onclick="desplegarTabla()" />
+      <p>Eliminar cuenta</p>
+      <input id="nombreTitular" type="text" placeholder="Indique el nombre del titular"></input>      
+      <input type="button" value="Eliminar cuenta" onclick="eliminarTitular()" />
       <div>
         <p>Todos los derechos reservados.</p>
       </div>
     </div>
-    
   </body>
 
   <style>
+    p{
+      margin-top: 10px;
+      margin-bottom: -3px;
+      font-size: 110%;
+      font-style: oblique;
+    }
+
+    #nombreTitular{
+      width: 26%;
+    }
+
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
@@ -133,11 +146,11 @@
       font-weight: bold;
     }
 
-    .table{
+    .table {
       padding: 65px;
     }
 
-    h3{
+    h3 {
       padding: 10px;
     }
 

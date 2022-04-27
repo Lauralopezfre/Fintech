@@ -114,14 +114,27 @@
         </tr>
       </table>
       <input type="button" value="Mostrar datos" onclick="desplegarTabla()">
-
-    <div>
-      <p>Todos los derechos reservados.</p>
-    </div>  
+      <p>Eliminar cuenta</p>
+      <input id="nombreTitular" type="text" placeholder="Indique el nombre del titular"></input>      
+      <input type="button" value="Eliminar cliente" onclick="eliminarTitular()" />
+      <div>
+        <p>Todos los derechos reservados.</p>
+      </div>
     </div>
   </body>
 
   <style>
+    p{
+      margin-top: 10px;
+      margin-bottom: -3px;
+      font-size: 110%;
+      font-style: oblique;
+    }
+
+    #nombreTitular{
+      width: 26%;
+    }
+
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
