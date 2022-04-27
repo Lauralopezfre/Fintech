@@ -23,8 +23,8 @@ async function postCliente(cliente) {
     console.log(response);
 }
 
-async function eliminarCliente() {
-    await fetch('http://localhost:5000/api/cliente/2000', {
+async function eliminarCliente(id) {
+    await fetch('http://localhost:5000/api/cliente/${id}', {
     method: 'DELETE'
     });
 }
@@ -88,6 +88,11 @@ async function desplegarTabla() {
         // Crea un elemento <td> y un nodo de texto, haz que el nodo de
         // texto sea el contenido de <td>, ubica el elemento <td> al final
         // de la hilera de la tabla
+        var celda = document.createElement("td");
+        var textoCelda = document.createTextNode(clientes[i].userId);
+        celda.appendChild(textoCelda);
+        hilera.appendChild(celda);
+
         var celda = document.createElement("td");
         var textoCelda = document.createTextNode(clientes[i].nombre);
         celda.appendChild(textoCelda);

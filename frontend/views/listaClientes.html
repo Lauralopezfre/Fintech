@@ -101,6 +101,7 @@
     <div class="table">
       <table>
         <tr>
+          <th>Id</th>
           <th>Nombre</th>
           <th>Telefono</th>
           <th>Direccion</th>
@@ -114,9 +115,9 @@
         </tr>
       </table>
       <input type="button" value="Mostrar datos" onclick="desplegarTabla()">
-      <p>Eliminar cuenta</p>
-      <input id="nombreTitular" type="text" placeholder="Indique el nombre del titular"></input>      
-      <input type="button" value="Eliminar cliente" onclick="eliminarCliente()" />
+      <p>Eliminar cliente</p>
+      <input id="nombreTitular" type="text" placeholder="Indique el id del cliente"></input>      
+      <input type="button" value="Eliminar cliente" onclick="eliminarCliente(document.getElementById('nombreTitular').value)" />
       <div>
         <p>Todos los derechos reservados.</p>
       </div>
