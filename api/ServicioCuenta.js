@@ -117,6 +117,7 @@ exports.update = async (req, res, next) => {
 //Delete cuenta 
 exports.delete = async (req, res, next) =>{
   try {
+    console.log(req.params.userId + "  id");
     const cliente = await control.cliente.obtener(req.params.userId)
 
     if(!cliente[0]){

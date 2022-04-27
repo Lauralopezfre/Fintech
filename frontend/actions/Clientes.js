@@ -23,6 +23,12 @@ async function postCliente(cliente) {
     console.log(response);
 }
 
+async function eliminarCliente() {
+    await fetch('http://localhost:5000/api/cliente/2000', {
+    method: 'DELETE'
+    });
+}
+
 function cargarArchivos(file) {
     identificacion = file.name
   }

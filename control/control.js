@@ -207,6 +207,7 @@ const obtenerCuenta = async(titular) => {
 
 const eliminarCuenta = async(titular) => {
   const c = await obtenerCuenta(titular)
+  console.log('si llega')
   await CuentaBD.eliminar(c[0]);
 };
 

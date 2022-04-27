@@ -5,10 +5,11 @@ async function getCuenta() {
     return data.cuenta
 }
 
-function eliminarCuenta(titular) {
-    fetch('http://localhost:5000/api/cuenta/titular', {
+async function eliminarCuenta() {
+    await fetch('http://localhost:5000/api/cuenta/2000', {
     method: 'DELETE'
 });
+location.reload();
 }
 
  
