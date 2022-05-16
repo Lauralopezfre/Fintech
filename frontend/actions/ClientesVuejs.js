@@ -4,14 +4,12 @@ async function getClientes() {
     return data.clientes
   }
 
-Vue.component('todo-item', {
-    props: ['todo'],
-    template: '<li>{{ todo.text }}</li>'
-})
-
 var app7 = new Vue({
-    el: '#app-7',
+    el: '#app-vuejs',
     data: {
         clientes: getClientes(),
+    },
+    methods: {
+        
     }
 });
