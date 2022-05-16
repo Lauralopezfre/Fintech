@@ -20,13 +20,15 @@ async function postCliente(cliente) {
         },
         body: JSON.stringify(cliente)
     })
-    console.log(response);
+    console.log(response.json);
 }
 
 async function eliminarCliente(id) {
-    await fetch('http://localhost:5000/api/cliente/${id}', {
+    const response = await fetch('http://localhost:5000/api/cliente/${id}', {
     method: 'DELETE'
     });
+
+    console.log(response);
 }
 
 function cargarArchivos(file) {
