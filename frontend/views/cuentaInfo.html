@@ -100,7 +100,7 @@
     text-align: center;
   "
 >
-  <h3>Información de tarjeta de clientes</h3>
+  <h3>Información de cuentas de clientes</h3>
 </div>
 
 <div id="app">
@@ -118,7 +118,7 @@
       </tr>
     </tr>
   </table>
-  <button v-on:click="getClientes">Obtener cuentas</button>
+  <button v-on:click="getCuentas">Obtener cuentas</button>
 </div>
 
 
@@ -129,7 +129,7 @@
     cuentas: []
   },
   methods: {
-    getClientes: async function () {
+    getCuentas: async function () {
       let response = await fetch(`http://localhost:5000/api/cuenta/`);
       let data = await response.json()
       this.cuentas = data.cuenta
@@ -178,7 +178,7 @@
   }
 
   tr:nth-child(even) {
-    background-color: #704040;
+    background-color: #b8b1b1;
   }
 </style>
 </html>
